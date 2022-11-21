@@ -1,0 +1,77 @@
+name: GKE Deployment
+
+on:
+  workflow_call:
+    inputs:
+      project_id:
+        type: string
+        required: false
+        default: wire-bot
+      zone:
+        type: string
+        required: false
+        default: europe-west1-c
+      cluster:
+        type: string
+        required: false
+        default: dagobah
+      namespace:
+        type: string
+        required: false
+      service:
+        type: string
+        required: true
+    secrets:
+      gke_sa_key:
+        required: true
+      webhook:
+        required: true
+
+jobs:
+  deploy:
+    name: Deploy to GKE K8s
+    runs-on: ubuntu-latest
+    steps:
+      - name: Authenticate to GKE
+        uses: google-github-actions/auth@v1
+        with:
+          project_id: ${{ inputs.project_id }}
+          credentials_json: ${{ secrets.gke_sa_key }}
+          service_account: kubernetes-deployment-agent@wire-bot.iam.gserviceaccount.com
+
+      # Setup gcloud CLI
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      # Configure Docker to use the gcloud command-line tool
+      - name: Configure Docker Google cloud
+        run: |
+          gcloud --quiet auth configure-docker
+
+      # Get the GKE credentials so we can deploy to the cluster
+      - name: Obtain k8s credentials
+        env:
+          GKE_CLUSTER: ${{ inputs.cluster }}
+          GKE_ZONE: ${{ inputs.zone }}
+        run: |
+          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+
+      # K8s is set up, deploy the app
+      - name: Deploy the Service
+        env:
+          SERVICE: ${{ inputs.service }}
+          NAMESPACE: ${{ inputs.namespace }}
+        run: |
+          kubectl delete pod -l app="${SERVICE}" -n "${NAMESPACE}"
+          kubectl describe pod -l app="${SERVICE}" -n "${NAMESPACE}"
+
+      # Send webhook to Wire using Slack Bot
+      - name: Webhook to Wire
+        uses: 8398a7/action-slack@v2
+        with:
+          status: ${{ job.status }}
+          author_name: ${{ inputs.service }} ${{ inputs.namespace }} pipeline
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.webhook }}
+        # Send message only if previous step failed
+        if: always()

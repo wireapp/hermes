@@ -9,6 +9,8 @@ services:
       dockerfile: Dockerfile
       args:
         - release_version=docker-compose
+    environment:
+      - DATABASE_URL=jdbc:postgresql://db:5432/be
     ports:
       - "8080:8080"
     depends_on:

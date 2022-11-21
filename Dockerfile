@@ -40,8 +40,8 @@ ENV FILE_LOG_PATH=/var/log/wire
 ENV PRODUCTION_LOGGING=true
 ENV ENABLE_FILE_LOG=false
 # Setup ports
-ENV SERVER_PORT=8080
-EXPOSE ${SERVER_PORT}
+ENV HERMES_PORT=8080
+EXPOSE ${HERMES_PORT}
 # And finally JVM
 # use 256 MB at the start and set cap to 2GB for heap
 # this is automatically propagated to the launch script

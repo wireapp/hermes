@@ -18,11 +18,11 @@ repositories {
 }
 
 dependencies {
-    // common goodies
-    implementation("dev.forst:katlib:2.2.2")
-
     // explicitly defined reflect library
     implementation(kotlin("reflect"))
+
+    // common goodies
+    implementation("dev.forst:katlib:2.2.2")
 
     // Ktor server dependencies
     implementation("io.ktor:ktor-server-core:2.1.3")
@@ -40,6 +40,9 @@ dependencies {
     implementation("io.ktor:ktor-server-call-id:2.1.3")
 
     implementation("io.ktor:ktor-serialization-jackson:2.1.3")
+
+    // OpenAPI / Swagger
+    implementation("dev.forst:ktor-openapi-generator:0.5.2")
 
     // Jackson JSON
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.0")
@@ -65,6 +68,8 @@ dependencies {
     implementation("org.postgresql:postgresql:42.5.0")
     // hikari database pool for optimal database connections
     implementation("com.zaxxer:HikariCP:5.0.1")
+    // di.di framework
+    implementation("org.flywaydb:flyway-core:9.8.2")
 
     // DI
     implementation("org.kodein.di:kodein-di-jvm:7.16.0")

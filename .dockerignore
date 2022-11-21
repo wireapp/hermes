@@ -1,9 +1,11 @@
 build/
 target
 .gradle
-
+Dockerfile
 *.iml
 .idea
 *.log.json
 README.md
 .gitignore
+.dockerignore
+.github
