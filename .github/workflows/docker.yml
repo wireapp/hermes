@@ -43,7 +43,7 @@ jobs:
         id: docker_meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ inputs.runtime_image }}
+          images: ${{ inputs.image }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}

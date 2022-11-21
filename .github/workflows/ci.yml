@@ -12,7 +12,7 @@ jobs:
 
   docker_build_test:
     uses: ./.github/workflows/docker.yml
-    secrets:
+    with:
       registry: docker.io
       image: ci_test
       publish: false
