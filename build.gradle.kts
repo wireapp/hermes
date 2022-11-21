@@ -76,12 +76,21 @@ dependencies {
     implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:7.16.0")
 
     // tests
-    testImplementation("io.mockk:mockk:1.13.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1") // junit testing framework
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1") // generated parameters for tests
     testImplementation(kotlin("test"))
-    testImplementation("io.ktor:ktor-server-test-host:2.1.3")
 
+    // Ktor
+    testImplementation("io.ktor:ktor-server-test-host:2.1.3")
+    testImplementation("io.ktor:ktor-client-json:2.1.3")
+    testImplementation("io.ktor:ktor-client-content-negotiation:2.1.3")
+    testImplementation("io.ktor:ktor-client-jackson:2.1.3")
+    testImplementation("io.ktor:ktor-client-okhttp:2.1.3")
+
+    // mocking
+    testImplementation("io.mockk:mockk:1.13.2")
+
+    // JUnit
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
 }
 
