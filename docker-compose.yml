@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+
+  be:
+    container_name: hermes_be
+    image: hermes_be
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - release_version=docker-compose
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  db:
+    container_name: hermes_db
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=hermes
+      - POSTGRES_PASSWORD=wire
+      - POSTGRES_DB=be
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+
+volumes:
+  db-data:
