@@ -1,0 +1,56 @@
+# port where the application runs
+server:
+  publicApiPort: ${HERMES_PORT:-8080}
+
+# basic information about the code
+application:
+  # version of the running application, should be set during build time in the docker
+  version: ${HERMES_VERSION:-development}
+  # environment of the application, DEVELOPMENT, STAGING, PRODUCTION
+  environment: ${HERMES_ENVIRONMENT:-DEVELOPMENT}
+  # information about the application
+  name: Hermes
+  description: Tiny Wire MLS Backend.
+  url: ${HERMES_URL:-http://localhost:8080}
+  # information about the publisher
+  publisher:
+    name: Wire
+    url: https://wire.com
+    email: lukas@wire.com
+
+# Connection to the database
+database:
+  userName: ${DATABASE_USERNAME:-hermes}
+  password: ${DATABASE_PASSWORD:-wire}
+  url: ${DATABASE_URL:-jdbc:postgresql://localhost:5432/be}
+  shouldMigrate: true
+
+# The logging settings are not directly used in the code
+# but rather in "logback.xml", for further details see the xml file.
+# The configs need to be set as environment variables, changing the configuration
+# here won't work. It's here just to have a complete list of envs somewhere.
+logging:
+  # enable production logging in JSON layout
+  enableProductionLogging: ${PRODUCTION_LOGGING:-false}
+  # global log level for all loggers
+  globalLogLevel: ${GLOBAL_LOG_LEVEL:-INFO}
+  # log level for any logger in "com.wire" package
+  logLevel: ${LOG_LEVEL:-TRACE}
+  fileLog:
+    # enable logging to files
+    enabled: ${ENABLE_FILE_LOG:-false}
+    # specify path where the files will be created
+    path: ${FILE_LOG_PATH:-.}
+
+# Configuration related to Swagger UI
+swagger:
+  enableOpenApiJson: ${SWAGGER_DEFINITION_ENABLED:-true}
+  enableSwaggerUI: ${SWAGGER_UI_ENABLED:-true}
+  info:
+    title: "{{application.publisher.name}} - {{application.name}}"
+    version: "{{application.version}}"
+    description: "{{application.description}}"
+    contact:
+      name: "{{application.publisher.name}}"
+      url: "{{application.publisher.url}}"
+      email: "{{application.publisher.email}}"

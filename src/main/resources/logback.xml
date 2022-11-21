@@ -1,12 +1,78 @@
-<configuration>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration>
+
+<configuration debug="false">
+    <!-- disable printing of debug information -->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+
+    <!-- import appenders -->
+    <import class="ch.qos.logback.core.ConsoleAppender"/>
+
+    <import class="ch.qos.logback.core.rolling.RollingFileAppender"/>
+    <import class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"/>
+
+    <import class="ch.qos.logback.core.encoder.LayoutWrappingEncoder"/>
+    <import class="com.wire.monitoring.JsonLoggingLayout"/>
+
+    <!-- console log -->
+    <appender name="local" class="ConsoleAppender">
         <encoder>
-            <pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %X{call-id} %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%date{ISO8601} %5level %logger{0} - %msg%n</pattern>
         </encoder>
     </appender>
-    <root level="trace">
-        <appender-ref ref="STDOUT"/>
-    </root>
-    <logger name="org.eclipse.jetty" level="INFO"/>
-    <logger name="io.netty" level="INFO"/>
+
+    <!-- json console log -->
+    <appender name="json" class="ConsoleAppender">
+        <encoder class="LayoutWrappingEncoder">
+            <layout class="JsonLoggingLayout"/>
+        </encoder>
+    </appender>
+
+    <!-- json file log  -->
+    <appender name="fileJson" class="RollingFileAppender">
+        <file>${FILE_LOG_PATH:-.}/app.log.json</file>
+        <rollingPolicy class="SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>app-%d{yyyy-MM-dd}.%i.log.json</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <immediateFlush>false</immediateFlush>
+        <encoder class="LayoutWrappingEncoder">
+            <layout class="JsonLoggingLayout"/>
+        </encoder>
+    </appender>
+
+    <if condition='"${PRODUCTION_LOGGING:-false}".equalsIgnoreCase("true")'>
+        <!--  production logging is in json  -->
+        <then>
+            <root level="${GLOBAL_LOG_LEVEL:-INFO}">
+                <appender-ref ref="json"/>
+            </root>
+            <logger name="com.wire" level="${LOG_LEVEL:-TRACE}"/>
+        </then>
+        <!-- development logging is debug -->
+        <else>
+            <root level="DEBUG">
+                <appender-ref ref="local"/>
+            </root>
+            <!-- move some loggers to INFO level -->
+            <logger name="io.netty" level="INFO"/>
+            <logger name="org.reflections" level="INFO"/>
+            <logger name="com.zaxxer.hikari" level="INFO"/>
+            <logger name="org.flywaydb.core" level="INFO"/>
+            <!-- this hides SQL queries from the log, set to DEBUG to see them -->
+            <logger name="Exposed" level="INFO"/>
+            <logger name="com.wire" level="TRACE"/>
+        </else>
+    </if>
+
+    <!-- if requested, enable file log -->
+    <if condition='"${ENABLE_FILE_LOG:-false}".equalsIgnoreCase("true")'>
+        <then>
+            <root>
+                <appender-ref ref="fileJson"/>
+            </root>
+        </then>
+    </if>
 </configuration>
