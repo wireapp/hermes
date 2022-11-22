@@ -20,6 +20,7 @@ import io.ktor.server.plugins.callid.callId
 import io.ktor.server.plugins.callloging.CallLogging
 import io.ktor.server.request.httpMethod
 import io.ktor.server.request.path
+import io.ktor.server.request.receiveText
 import io.ktor.server.sessions.sessionId
 import io.ktor.util.AttributeKey
 import org.kodein.di.instance
@@ -48,14 +49,14 @@ fun Application.installMonitoring() {
         mdc(INSTANCE_ID) { INSTANCE }
         mdc(SESSION_ID) { it.sessionId }
 
-        val ignoredPaths = setOf<String>()
-        val ignoredMethods = setOf(HttpMethod.Options, HttpMethod.Head)
-        filter {
-            val path = it.request.path()
-            path.startsWith(Routes.apiPrefix) &&
-                    !ignoredPaths.contains(path) && // without ignored service paths
-                    !ignoredMethods.contains(it.request.httpMethod) // and ignored, not used, methods
-        }
+//        val ignoredPaths = setOf<String>()
+//        val ignoredMethods = setOf(HttpMethod.Options, HttpMethod.Head)
+//        filter {
+//            val path = it.request.path()
+//            path.startsWith(Routes.apiPrefix) &&
+//                    !ignoredPaths.contains(path) && // without ignored service paths
+//                    !ignoredMethods.contains(it.request.httpMethod) // and ignored, not used, methods
+//        }
         level = Level.INFO // we want to log especially the results of the requests
         logger = createLogger("HttpCallLogger")
 

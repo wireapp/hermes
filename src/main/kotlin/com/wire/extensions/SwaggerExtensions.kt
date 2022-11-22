@@ -14,14 +14,25 @@ import io.ktor.server.response.respondOutputStream
 import io.ktor.server.response.respondRedirect
 import io.ktor.server.routing.Routing
 import io.ktor.server.routing.application
+import org.kodein.di.DIAware
+import org.kodein.di.Instance
 import org.kodein.di.LazyDI
+import org.kodein.di.LazyDelegate
 import org.kodein.di.ktor.closestDI
+import org.kodein.type.generic
 import java.io.InputStream
 
 /**
  * Simple extension to provide DI container inside Swagger defined routes.
  */
 fun OpenAPIRoute<*>.closestDI(): LazyDI = ktorRoute.application.closestDI()
+
+/**
+ * Simple extension to provide DI container inside Swagger defined routes.
+ */
+@Suppress("RemoveExplicitTypeArguments") // we need it here
+inline fun <reified T : Any> OpenAPIRoute<*>.instance(tag: Any? = null): LazyDelegate<T> =
+    ktorRoute.application.closestDI().Instance<T>(generic(), tag)
 
 /**
  * Shortcut for application DI.
@@ -39,6 +50,13 @@ val OpenAPIPipelineResponseContext<*>.context
  */
 val OpenAPIPipelineResponseContext<*>.request
     get() = context.request
+
+/**
+ * Shortcut for pipeline request.
+ */
+val OpenAPIPipelineResponseContext<*>.call
+    get() = this.request.call
+
 
 /**
  * Responds only with the given status code.

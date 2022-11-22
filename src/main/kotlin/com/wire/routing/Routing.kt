@@ -21,6 +21,13 @@ fun Application.installRouting() {
 
     // register API routing with swagger
     apiRouting {
+        loginRoutes()
+        featureFlagsRoutes()
+        conversationRoutes()
+        connectionRoutes()
+        usersRoutes()
+        notificationRoutes()
+
         serviceRoutes()
     }
 }

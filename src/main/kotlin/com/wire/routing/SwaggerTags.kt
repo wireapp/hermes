@@ -8,4 +8,5 @@ import com.papsign.ktor.openapigen.APITag
 @Suppress("EnumEntryName", "EnumNaming") // because we want to have reasonable names in swagger
 enum class SwaggerTags(override val description: String) : APITag {
     service("Service endpoints without business logic."),
+    auth("Auth related endpoints.")
 }
