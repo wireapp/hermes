@@ -10,18 +10,21 @@ import com.papsign.ktor.openapigen.route.path.normal.get
 import com.papsign.ktor.openapigen.route.path.normal.post
 import com.papsign.ktor.openapigen.route.response.respond
 import com.papsign.ktor.openapigen.route.route
-import com.wire.dto.KeyPackage
-import com.wire.dto.NonQualifiedUserId
-import com.wire.dto.QualifiedId
-import com.wire.dto.TeamId
-import com.wire.dto.UserId
+import com.wire.dao.KeyPackage
+import com.wire.dao.NonQualifiedUserId
+import com.wire.dao.QualifiedId
+import com.wire.dto.access.AccessTokenDTO
+import com.wire.dto.access.RefreshToken
+import com.wire.dto.user.Password
+import com.wire.dto.user.UserDTO
+import com.wire.error.EntityNotFoundException
 import com.wire.extensions.call
-import com.wire.extensions.instance
 import com.wire.extensions.createLogger
+import com.wire.extensions.instance
 import com.wire.extensions.respondWithStatus
+import com.wire.service.UserService
+import com.wire.service.access.AccessService
 import io.ktor.http.HttpStatusCode
-import io.ktor.server.request.header
-import org.kodein.di.instance
 import java.time.Instant
 import java.util.UUID
 
@@ -29,6 +32,8 @@ private val logger = createLogger("LoginRoute")
 
 
 fun NormalOpenAPIRoute.loginRoutes() {
+    val accessService by instance<AccessService>()
+    val userService by instance<UserService>()
 
     val mapper by instance<ObjectMapper>()
 
@@ -47,59 +52,40 @@ fun NormalOpenAPIRoute.loginRoutes() {
         )
     }
 
-    route("${VERSION}/login").post<Unit, LoginResponse, LoginRequest>(
+    route("${VERSION}/login").post<Unit, AccessTokenDTO, LoginRequest>(
         info(summary = "Logins user"),
     ) { _, login ->
-        logger.info { login.toString() }
 
-        call.response.cookies.append("zuid", login.email)
-        respond(
-            LoginResponse(
-                userId = login.email,
-                accessToken = login.email,
-                expiresIn = 100000,
-                tokenType = "Bearer"
-            )
-        )
+        val (accessToken, refreshToken) = accessService
+            .generateTokens(email = login.email, password = Password(login.password))
+
+        call.response.cookies.append("zuid", refreshToken())
+        respond(accessToken)
     }
 
-    route("${VERSION}/access").post<Unit, LoginResponse, Unit>(
+    route("${VERSION}/access").post<Unit, AccessTokenDTO, Unit>(
         info(summary = "Issues access token."),
     ) { _, _ ->
-        val email = call.request.cookies["zuid"]!!
+        val zuidCookie = call.request.cookies["zuid"]!!
+        val (accessToken, refreshToken) = accessService
+            .generateTokens(refreshToken = RefreshToken(zuidCookie))
 
-        call.response.cookies.append("zuid", email)
-        respond(
-            LoginResponse(
-                userId = email,
-                accessToken = email,
-                expiresIn = 100000,
-                tokenType = "Bearer"
-            )
-        )
+        call.response.cookies.append("zuid", refreshToken())
+        respond(accessToken)
     }
 
     route("${VERSION}/self").get<Unit, UserDTO> {
-        val email = call.request.header("Authorization")!!.substringAfter("Bearer ")
-        respond(
-            UserDTO(
-                accentId = 0,
-                assets = emptyList(),
-                deleted = false,
-                email = email,
-                expiresAt = null,
-                handle = email,
-                nonQualifiedId = email,
-                name = email,
-                locale = "en-us",
-                id = QualifiedId(email, "localhost.local"),
-                teamId = null
-            )
-        )
+        // todo get this from the auth context
+        val selfId = QualifiedId("", UUID.randomUUID())
+
+        val user = userService.getUserById(selfId)
+            ?: throw EntityNotFoundException<UserDTO>("id = $selfId") // todo: this should not happen
+
+        respond(user)
     }
 
     route("${VERSION}/clients").post<Unit, ClientResponse, RegisterClientRequest>(
-        info(summary = "Logins user"),
+        info(summary = "Registers client"),
     ) { _, registration ->
         logger.info { registration.type }
 
@@ -180,32 +166,6 @@ internal data class RegisterClientRequest(
 )
 
 
-internal data class UserAssetDTO(
-    @JsonProperty("key") val key: String,
-    @JsonProperty("size") val size: String?,
-    @JsonProperty("type") val type: String
-)
-
-internal data class UserDTO(
-    @JsonProperty("accent_id") val accentId: Int,
-    @JsonProperty("assets") val assets: List<UserAssetDTO>,
-    @JsonProperty("deleted") val deleted: Boolean?,
-    @JsonProperty("email") val email: String?,
-    @JsonProperty("expires_at") val expiresAt: String?,
-    @JsonProperty("handle") val handle: String?,
-    @Deprecated("use id instead", replaceWith = ReplaceWith("this.id"))
-    @JsonProperty("id") val nonQualifiedId: NonQualifiedUserId,
-    @JsonProperty("name") val name: String,
-    @JsonProperty("locale") val locale: String,
-    @JsonProperty("managed_by") val managedByDTO: Any? = null,
-    @JsonProperty("phone") val phone: String? = null,
-    @JsonProperty("qualified_id") val id: UserId,
-    @JsonProperty("service") val service: Any? = null,
-    @JsonProperty("sso_id") val ssoID: Any? = null,
-    @JsonProperty("team") val teamId: TeamId?
-)
-
-
 internal data class VersionInfo(
     @JsonProperty("federation") val federation: Boolean,
     @JsonProperty("supported") val supported: List<Int>,
@@ -218,7 +178,11 @@ internal data class LoginRequest(
     val email: String,
     val password: String,
     val label: String
-)
+) {
+    override fun toString(): String {
+        return "LoginRequest(email='$email', label='$label')"
+    }
+}
 
 internal data class LoginResponse(
     @JsonProperty("user") val userId: NonQualifiedUserId,

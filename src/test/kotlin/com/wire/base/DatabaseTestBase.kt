@@ -1,7 +1,8 @@
 package com.wire.base
 
 import com.wire.dao.Database
-import org.flywaydb.core.Flyway
+import com.wire.setup.ktor.tables
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.kodein.di.DI
@@ -31,8 +32,10 @@ open class DatabaseTestBase(
             val db by instance<Database>()
             require(db.isConnected()) { "It was not possible to connect to db database!" }
 
-            val flyway by instance<Flyway>()
-            flyway.migrate()
+            // TODO disable this and let Flyway do the job, once we have proper schema
+            SchemaUtils.create(*tables())
+//            val flyway by instance<Flyway>()
+//            flyway.migrate()
 
             populateDatabase(rootDI)
         }

@@ -6,9 +6,8 @@ import com.papsign.ktor.openapigen.route.path.normal.NormalOpenAPIRoute
 import com.papsign.ktor.openapigen.route.path.normal.post
 import com.papsign.ktor.openapigen.route.response.respond
 import com.papsign.ktor.openapigen.route.route
-import com.wire.dto.ConversationId
-import com.wire.dto.UserId
-import com.wire.extensions.call
+import com.wire.dao.ConversationId
+import com.wire.dao.UserId
 import com.wire.extensions.createLogger
 
 private val logger = createLogger("ConnectionRoutes")

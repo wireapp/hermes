@@ -18,4 +18,6 @@ fun DI.MainBuilder.registerConfiguration(configuration: Configuration) {
     bindSingleton { instance<Configuration>().database }
     bindSingleton { instance<Configuration>().swagger }
     bindSingleton { instance<Configuration>().server }
+    bindSingleton { instance<Configuration>().federation }
+    bindSingleton { instance<Configuration>().jwt }
 }

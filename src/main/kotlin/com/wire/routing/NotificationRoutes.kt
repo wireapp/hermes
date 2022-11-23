@@ -5,14 +5,8 @@ import com.papsign.ktor.openapigen.annotations.parameters.QueryParam
 import com.papsign.ktor.openapigen.route.info
 import com.papsign.ktor.openapigen.route.path.normal.NormalOpenAPIRoute
 import com.papsign.ktor.openapigen.route.path.normal.get
-import com.papsign.ktor.openapigen.route.path.normal.post
 import com.papsign.ktor.openapigen.route.response.respond
 import com.papsign.ktor.openapigen.route.route
-import com.wire.dto.ConversationId
-import com.wire.dto.NonQualifiedUserId
-import com.wire.dto.TeamId
-import com.wire.dto.UserId
-import com.wire.extensions.call
 import com.wire.extensions.createLogger
 import java.util.UUID
 

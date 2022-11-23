@@ -53,6 +53,9 @@ dependencies {
     implementation("com.sksamuel.hoplite:hoplite-core:2.6.5")
     implementation("com.sksamuel.hoplite:hoplite-yaml:2.6.5")
 
+    // passwords hashing
+    implementation("com.lambdaworks:scrypt:1.4.0")
+
     // logging
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
     implementation("ch.qos.logback:logback-classic:1.4.5")

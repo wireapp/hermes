@@ -25,8 +25,22 @@ private val logger = createLogger("ExceptionHandler")
  */
 fun Application.installExceptionHandling() {
     install(StatusPages) {
-        jsonExceptions()
+
+        exception<EntityNotFoundException> { call, e ->
+            logger.debug { e.message }
+            call.errorResponse(e, HttpStatusCode.NotFound, e.message)
+        }
+
         // generic error handling
+        jsonExceptions()
+        exception<ApplicationException> { call, e ->
+            logger.error(e) { "An exception that was not handled properly occurred in the application: ${e.message}." }
+            call.errorResponse(
+                e,
+                HttpStatusCode.InternalServerError,
+                "Server was unable to fulfill the request, please contact administrator with request ID: ${call.callId}."
+            )
+        }
         exception<Exception> { call, e ->
             logger.error(e) { "Unknown exception occurred in the application: ${e.message}." }
             call.errorResponse(

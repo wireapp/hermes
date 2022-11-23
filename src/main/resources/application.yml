@@ -54,3 +54,14 @@ swagger:
       name: "{{application.publisher.name}}"
       url: "{{application.publisher.url}}"
       email: "{{application.publisher.email}}"
+
+# Business logic specific stuff
+# TODO: all this is development only
+
+federation:
+  domain: hermes.local
+
+jwt:
+  secret: "hbTGKECww+rjQFq0GbGhp0Dl8KSlogHv"
+  issuer: "{{application.url}}"
+  expiration: 60m

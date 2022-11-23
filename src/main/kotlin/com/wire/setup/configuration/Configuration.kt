@@ -1,5 +1,7 @@
 package com.wire.setup.configuration
 
+import com.wire.setup.configuration.auth.JwtConfiguration
+
 /**
  * Complete configuration as in application.yml.
  */
@@ -19,5 +21,7 @@ data class Configuration(
     /**
      * Swagger feature configuration.
      */
-    val swagger: SwaggerConfiguration
+    val swagger: SwaggerConfiguration,
+    val federation: FederationConfiguration,
+    val jwt: JwtConfiguration
 )

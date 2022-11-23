@@ -33,16 +33,23 @@ class Database(private val connectedDb: ExposedDb) {
     }.isSuccess
 
     /**
+     * Executes synchronous query.
+     */
+    fun <T> blockingQuery(
+        statement: Transaction.() -> T
+    ): T = transaction(connectedDb) { statement() }
+
+    /**
      * Executes query with this database.
      */
     suspend fun <T> query(
         statement: suspend Transaction.() -> T
-    ): T = newSuspendedTransaction(Dispatchers.IO, this@Database.connectedDb) { statement() }
+    ): T = newSuspendedTransaction(Dispatchers.IO, connectedDb) { statement() }
 
     /**
      * Executes async query in the database.
      */
     suspend fun <T> queryAsync(
         statement: suspend Transaction.() -> T
-    ): Deferred<T> = suspendedTransactionAsync(Dispatchers.IO, this@Database.connectedDb) { statement() }
+    ): Deferred<T> = suspendedTransactionAsync(Dispatchers.IO, connectedDb) { statement() }
 }
