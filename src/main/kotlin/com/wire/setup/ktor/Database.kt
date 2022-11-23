@@ -1,6 +1,7 @@
 package com.wire.setup.ktor
 
 import com.wire.dao.Database
+import com.wire.dao.model.Conversations
 import com.wire.dao.model.Teams
 import com.wire.dao.model.Users
 import com.wire.extensions.createLogger
@@ -79,4 +80,4 @@ private fun Application.initializeDebugDatabase() {
 }
 
 // we have it internal, so we can access it from the tests
-internal fun tables() = arrayOf(Teams, Users)
+internal fun tables() = arrayOf(Teams, Users, Conversations)
