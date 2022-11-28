@@ -50,7 +50,7 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.1")
 
     // configuration loader
-    implementation("com.sksamuel.hoplite:hoplite-core:2.6.5")
+    implementation("com.sksamuel.hoplite:hoplite-core:2.7.0")
     implementation("com.sksamuel.hoplite:hoplite-yaml:2.6.5")
 
     // passwords hashing
