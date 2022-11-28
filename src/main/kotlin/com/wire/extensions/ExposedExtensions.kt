@@ -30,3 +30,26 @@ fun <T : AbstractQuery<T>> AbstractQuery<T>.getOne(): ResultRow? = limit(1).firs
 fun ManagedTable.selectForDomain(domain: Domain) = select { this@selectForDomain.domain eq domain }
 
 fun ResultRow.toQualifiedId(table: ManagedTable) = QualifiedId(this[table.domain], this[table.id])
+
+/**
+ * Maps one-to-many relationships, where we expect only a single "one" part of the row.
+ *
+ * Executes [oneMapper] to first row and then only [manyMapper] for the rest.
+ * Returns a pair of (one, many) if the [ResultRow] is not empty, otherwise returns null.
+ */
+inline fun <reified O, reified M> Query.getOneToMany(
+    oneMapper: (ResultRow) -> O,
+    manyMapper: (one: O, ResultRow) -> M
+): Pair<O, List<M>>? {
+    val iter = this.iterator()
+    if (!iter.hasNext()) return null
+
+    val firstElement = iter.next()
+    val one = oneMapper(firstElement)
+    val results = mutableListOf(manyMapper(one, firstElement))
+
+    while (iter.hasNext()) {
+        results.add(manyMapper(one, iter.next()))
+    }
+    return Pair(one, results.toList())
+}
