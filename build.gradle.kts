@@ -35,7 +35,7 @@ dependencies {
 
     implementation("io.ktor:ktor-server-auth:2.1.3")
     implementation("io.ktor:ktor-server-auth-jwt:2.1.3")
-    implementation("io.ktor:ktor-server-sessions:2.1.3")
+    implementation("io.ktor:ktor-server-sessions:2.2.1")
 
     implementation("io.ktor:ktor-server-call-id:2.1.3")
 
