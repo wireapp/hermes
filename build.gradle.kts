@@ -39,7 +39,7 @@ dependencies {
 
     implementation("io.ktor:ktor-server-call-id:2.1.3")
 
-    implementation("io.ktor:ktor-serialization-jackson:2.1.3")
+    implementation("io.ktor:ktor-serialization-jackson:2.2.1")
 
     // OpenAPI / Swagger
     implementation("dev.forst:ktor-openapi-generator:0.5.3")
