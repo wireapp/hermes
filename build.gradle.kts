@@ -72,7 +72,7 @@ dependencies {
     // hikari database pool for optimal database connections
     implementation("com.zaxxer:HikariCP:5.0.1")
     // di.di framework
-    implementation("org.flywaydb:flyway-core:9.8.2")
+    implementation("org.flywaydb:flyway-core:9.10.2")
 
     // DI
     implementation("org.kodein.di:kodein-di-jvm:7.16.0")
