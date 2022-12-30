@@ -76,7 +76,7 @@ dependencies {
 
     // DI
     implementation("org.kodein.di:kodein-di-jvm:7.16.0")
-    implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:7.16.0")
+    implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:7.17.0")
 
     // tests
     testImplementation(kotlin("test"))
