@@ -85,7 +85,7 @@ dependencies {
     testImplementation("io.ktor:ktor-server-test-host:2.1.3")
     testImplementation("io.ktor:ktor-client-json:2.1.3")
     testImplementation("io.ktor:ktor-client-content-negotiation:2.1.3")
-    testImplementation("io.ktor:ktor-client-jackson:2.1.3")
+    testImplementation("io.ktor:ktor-client-jackson:2.2.2")
     testImplementation("io.ktor:ktor-client-okhttp:2.1.3")
 
     // mocking
