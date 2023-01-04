@@ -29,7 +29,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:2.1.3")
 
     implementation("io.ktor:ktor-server-content-negotiation:2.1.3")
-    implementation("io.ktor:ktor-server-default-headers:2.1.3")
+    implementation("io.ktor:ktor-server-default-headers:2.2.2")
     implementation("io.ktor:ktor-server-forwarded-header:2.1.3")
     implementation("io.ktor:ktor-server-status-pages:2.1.3")
 
