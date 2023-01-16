@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
-    kotlin("jvm") version "1.7.21"
+    kotlin("jvm") version "1.8.0"
 }
 
 group = "com.wire"
@@ -25,24 +25,24 @@ dependencies {
     implementation("dev.forst:katlib:2.2.3")
 
     // Ktor server dependencies
-    implementation("io.ktor:ktor-server-core:2.1.3")
-    implementation("io.ktor:ktor-server-netty:2.1.3")
+    implementation("io.ktor:ktor-server-core:2.2.2")
+    implementation("io.ktor:ktor-server-netty:2.2.2")
 
-    implementation("io.ktor:ktor-server-content-negotiation:2.1.3")
-    implementation("io.ktor:ktor-server-default-headers:2.1.3")
-    implementation("io.ktor:ktor-server-forwarded-header:2.1.3")
-    implementation("io.ktor:ktor-server-status-pages:2.1.3")
+    implementation("io.ktor:ktor-server-content-negotiation:2.2.2")
+    implementation("io.ktor:ktor-server-default-headers:2.2.2")
+    implementation("io.ktor:ktor-server-forwarded-header:2.2.2")
+    implementation("io.ktor:ktor-server-status-pages:2.2.2")
 
-    implementation("io.ktor:ktor-server-auth:2.1.3")
-    implementation("io.ktor:ktor-server-auth-jwt:2.1.3")
-    implementation("io.ktor:ktor-server-sessions:2.1.3")
+    implementation("io.ktor:ktor-server-auth:2.2.2")
+    implementation("io.ktor:ktor-server-auth-jwt:2.2.2")
+    implementation("io.ktor:ktor-server-sessions:2.2.2")
 
-    implementation("io.ktor:ktor-server-call-id:2.1.3")
+    implementation("io.ktor:ktor-server-call-id:2.2.2")
 
-    implementation("io.ktor:ktor-serialization-jackson:2.1.3")
+    implementation("io.ktor:ktor-serialization-jackson:2.2.2")
 
     // OpenAPI / Swagger
-    implementation("dev.forst:ktor-openapi-generator:0.5.3")
+    implementation("dev.forst:ktor-openapi-generator:0.5.4")
 
     // Jackson JSON
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.1")
@@ -50,8 +50,8 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.1")
 
     // configuration loader
-    implementation("com.sksamuel.hoplite:hoplite-core:2.6.5")
-    implementation("com.sksamuel.hoplite:hoplite-yaml:2.6.5")
+    implementation("com.sksamuel.hoplite:hoplite-core:2.7.0")
+    implementation("com.sksamuel.hoplite:hoplite-yaml:2.7.0")
 
     // passwords hashing
     implementation("com.lambdaworks:scrypt:1.4.0")
@@ -68,33 +68,33 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:0.41.1")
     implementation("org.jetbrains.exposed:exposed-java-time:0.41.1")
     // PostgreSQL driver
-    implementation("org.postgresql:postgresql:42.5.0")
+    implementation("org.postgresql:postgresql:42.5.1")
     // hikari database pool for optimal database connections
     implementation("com.zaxxer:HikariCP:5.0.1")
     // di.di framework
     implementation("org.flywaydb:flyway-core:9.8.2")
 
     // DI
-    implementation("org.kodein.di:kodein-di-jvm:7.16.0")
-    implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:7.16.0")
+    implementation("org.kodein.di:kodein-di-jvm:7.18.0")
+    implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:7.18.0")
 
     // tests
     testImplementation(kotlin("test"))
 
     // Ktor
-    testImplementation("io.ktor:ktor-server-test-host:2.1.3")
-    testImplementation("io.ktor:ktor-client-json:2.1.3")
-    testImplementation("io.ktor:ktor-client-content-negotiation:2.1.3")
-    testImplementation("io.ktor:ktor-client-jackson:2.1.3")
-    testImplementation("io.ktor:ktor-client-okhttp:2.1.3")
+    testImplementation("io.ktor:ktor-server-test-host:2.2.2")
+    testImplementation("io.ktor:ktor-client-json:2.2.2")
+    testImplementation("io.ktor:ktor-client-content-negotiation:2.2.2")
+    testImplementation("io.ktor:ktor-client-jackson:2.2.2")
+    testImplementation("io.ktor:ktor-client-okhttp:2.2.2")
 
     // mocking
-    testImplementation("io.mockk:mockk:1.13.2")
+    testImplementation("io.mockk:mockk:1.13.3")
 
     // JUnit
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
 tasks {

@@ -51,7 +51,7 @@ fun DI.MainBuilder.registerClasses() {
     // auth
     // jwt security
     bindSingleton {
-        Algorithm.HMAC256(instance<JwtConfiguration>().signingSecret.value)
+        Algorithm.HMAC256(instance<JwtConfiguration>().secret.value)
     }
     bindSingleton {
         JWT.require(instance())
