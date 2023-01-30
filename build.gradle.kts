@@ -89,7 +89,7 @@ dependencies {
     testImplementation("io.ktor:ktor-client-okhttp:2.2.2")
 
     // mocking
-    testImplementation("io.mockk:mockk:1.13.3")
+    testImplementation("io.mockk:mockk:1.13.4")
 
     // JUnit
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
