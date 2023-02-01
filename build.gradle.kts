@@ -33,7 +33,7 @@ dependencies {
     implementation("io.ktor:ktor-server-forwarded-header:2.2.2")
     implementation("io.ktor:ktor-server-status-pages:2.2.2")
 
-    implementation("io.ktor:ktor-server-auth:2.2.2")
+    implementation("io.ktor:ktor-server-auth:2.2.3")
     implementation("io.ktor:ktor-server-auth-jwt:2.2.2")
     implementation("io.ktor:ktor-server-sessions:2.2.2")
 
