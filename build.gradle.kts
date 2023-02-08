@@ -42,7 +42,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-jackson:2.2.2")
 
     // OpenAPI / Swagger
-    implementation("dev.forst:ktor-openapi-generator:0.5.5")
+    implementation("dev.forst:ktor-openapi-generator:0.6.1")
 
     // Jackson JSON
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.1")
