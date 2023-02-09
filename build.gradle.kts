@@ -25,7 +25,7 @@ dependencies {
     implementation("dev.forst:katlib:2.2.5")
 
     // Ktor server dependencies
-    implementation("io.ktor:ktor-server-core:2.2.2")
+    implementation("io.ktor:ktor-server-core:2.2.3")
     implementation("io.ktor:ktor-server-netty:2.2.2")
 
     implementation("io.ktor:ktor-server-content-negotiation:2.2.2")
