@@ -26,7 +26,7 @@ dependencies {
 
     // Ktor server dependencies
     implementation("io.ktor:ktor-server-core:2.2.2")
-    implementation("io.ktor:ktor-server-netty:2.2.2")
+    implementation("io.ktor:ktor-server-netty:2.2.4")
 
     implementation("io.ktor:ktor-server-content-negotiation:2.2.2")
     implementation("io.ktor:ktor-server-default-headers:2.2.2")
