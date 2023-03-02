@@ -51,7 +51,7 @@ dependencies {
 
     // configuration loader
     implementation("com.sksamuel.hoplite:hoplite-core:2.7.0")
-    implementation("com.sksamuel.hoplite:hoplite-yaml:2.7.0")
+    implementation("com.sksamuel.hoplite:hoplite-yaml:2.7.2")
 
     // passwords hashing
     implementation("com.lambdaworks:scrypt:1.4.0")
