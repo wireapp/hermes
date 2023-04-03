@@ -75,7 +75,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core:9.12.0")
 
     // DI
-    implementation("org.kodein.di:kodein-di-jvm:7.18.0")
+    implementation("org.kodein.di:kodein-di-jvm:7.19.1")
     implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:7.18.0")
 
     // tests
