@@ -22,7 +22,7 @@ dependencies {
     implementation(kotlin("reflect"))
 
     // common goodies
-    implementation("dev.forst:katlib:2.2.5")
+    implementation("dev.forst:katlib:2.2.6")
 
     // Ktor server dependencies
     implementation("io.ktor:ktor-server-core:2.2.2")
