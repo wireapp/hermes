@@ -82,7 +82,7 @@ dependencies {
     testImplementation(kotlin("test"))
 
     // Ktor
-    testImplementation("io.ktor:ktor-server-test-host:2.2.2")
+    testImplementation("io.ktor:ktor-server-test-host:2.3.0")
     testImplementation("io.ktor:ktor-client-json:2.2.2")
     testImplementation("io.ktor:ktor-client-content-negotiation:2.2.2")
     testImplementation("io.ktor:ktor-client-jackson:2.2.2")
