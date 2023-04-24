@@ -45,7 +45,7 @@ dependencies {
     implementation("dev.forst:ktor-openapi-generator:0.5.5")
 
     // Jackson JSON
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.1")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.1")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.1")
 
