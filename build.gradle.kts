@@ -47,7 +47,7 @@ dependencies {
     // Jackson JSON
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.1")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.1")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.1")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.0")
 
     // configuration loader
     implementation("com.sksamuel.hoplite:hoplite-core:2.7.0")
